@@ -4,17 +4,17 @@
 #include <time.h>
 #include <Windows.h>
 
-//ÓÎÏ·³£Êı²ÎÊı
+//æ¸¸æˆå¸¸æ•°å‚æ•°
 enum constant
 {
-	Edge = -1, AirPlane = 1, Space = 0, Bullet = 2, Enemy = 3, EnergyRecoveryFactor = 4,	//Êä³öÔªËØ
-	SpMax = 100, HpMax = 100,	//×î´óÖµ
-	J = 3, K = 100, L = 500,	//¼¼ÄÜ
-	SpRecover1 = 2, SpRecover2 = 20,	//ÄÜÁ¿»Ø¸´
-	High = 27, Width = 52,	//½çÃæ´óĞ¡
-	EnengyConsumptionK = 50, EnengyConsumptionL = 20,	//ÄÜÁ¿»Ø¸´
-	EnemyMoveSpeed = 3,	//µĞ»úËÙÂÊ(µİ¼õ) 
-	ProbabERF = 10,	//²úÉúÄÜÁ¿Òò×ÓµÄ¸ÅÂÊ
+	Edge = -1, AirPlane = 1, Space = 0, Bullet = 2, Enemy = 3, EnergyRecoveryFactor = 4,	//è¾“å‡ºå…ƒç´ 
+	SpMax = 100, HpMax = 100,	//æœ€å¤§å€¼
+	J = 3, K = 100, L = 500,	//æŠ€èƒ½
+	SpRecover1 = 2, SpRecover2 = 20,	//èƒ½é‡å›å¤
+	High = 27, Width = 52,	//ç•Œé¢å¤§å°
+	EnengyConsumptionK = 50, EnengyConsumptionL = 20,	//èƒ½é‡å›å¤
+	EnemyMoveSpeed = 3,	//æ•Œæœºé€Ÿç‡(é€’å‡) 
+	ProbabERF = 10,	//äº§ç”Ÿèƒ½é‡å› å­çš„æ¦‚ç‡
 };
 
 typedef struct 
@@ -23,11 +23,11 @@ typedef struct
 	int y;
 }POS;
 
-//³õÖµ
+//åˆå€¼
 POS air, enemy;
-int canvas[High][Width] = { 0 };	//»­²¼
-int score = 0, hp = HpMax, sp = SpMax, p = 1;	//µÃ·Ö£¬ÉúÃü£¬ÄÜÁ¿£¬¸ÅÂÊ
-int k0 = 0, k1 = 0, k2 = 0;		//¼¼ÄÜ
+int canvas[High][Width] = { 0 };	//ç”»å¸ƒ
+int score = 0, hp = HpMax, sp = SpMax, p = 1;	//å¾—åˆ†ï¼Œç”Ÿå‘½ï¼Œèƒ½é‡ï¼Œæ¦‚ç‡
+int k0 = 0, k1 = 0, k2 = 0;		//æŠ€èƒ½
 
 void Welcome(void);
 void Start(void);
@@ -41,7 +41,7 @@ int EnemyJudge(void);
 void HideCur(void);
 void GoToXY(int x, int y);
 
-//Ö÷º¯Êı
+//ä¸»å‡½æ•°
 int main()
 {
 	Welcome();
@@ -57,11 +57,11 @@ int main()
 
 
 
-//Êä³ö 
+//è¾“å‡º 
 void Print(void)
 {
 	GoToXY(0, 0);
-	//´òÓ¡µØÍ¼¼°ÔªËØ
+	//æ‰“å°åœ°å›¾åŠå…ƒç´ 
 	int i, j;
 	for (i = 0; i < High; i++)
 	{
@@ -96,7 +96,7 @@ void Print(void)
 	}
 	printf("\n");
 
-	//´òÓ¡ÑªÌõ
+	//æ‰“å°è¡€æ¡
 	for (i = 1; i <= 10; i++)
 	{
 		if (i <= hp / 10)
@@ -110,7 +110,7 @@ void Print(void)
 	}
 	if(k2 > 0)
 	{
-		printf("»Ø¸´ÖĞ...");
+		printf("å›å¤ä¸­...");
 	}
 	else
 	{
@@ -118,10 +118,10 @@ void Print(void)
 	}
 	printf("\nHP  = %3d\n", hp);
 
-	//´òÓ¡µÃ·Ö
+	//æ‰“å°å¾—åˆ†
 	printf("\t\t\tScore = %4d\n", score);
 
-	//´òÓ¡À¶Ìõ
+	//æ‰“å°è“æ¡
 	for (i = 1; i <= 10; i++)
 	{
 		if (i <= sp / 10)
@@ -135,7 +135,7 @@ void Print(void)
 	}
 	printf("\nSP  = %3d", sp);
 
-	//ÉúÃüµÍÓÚ0£¬½áÊøÓÎÏ·
+	//ç”Ÿå‘½ä½äº0ï¼Œç»“æŸæ¸¸æˆ
 	if (hp <= 0)
 	{
 		printf("\nGame Over!\n");
@@ -149,19 +149,19 @@ void Print(void)
 	Sleep(1);
 }
 
-//³õÊ¼»¯
+//åˆå§‹åŒ–
 void Start(void)
 {
 	srand(time(0));
 
-	//·É»úÎ»ÖÃ
+	//é£æœºä½ç½®
 	air.x = 3 * High / 4;
 	air.y = Width / 2;
 	canvas[air.x][air.y] = AirPlane;
 
 	NewEnemy();
 	
-	//µØÍ¼±ß½ç
+	//åœ°å›¾è¾¹ç•Œ
 	int i, j;
 	for (i = 0; i < High; i++)
 	{
@@ -176,13 +176,13 @@ void Start(void)
 
 }
 
-//ÓëÊäÈëÓĞ¹ØµÄ¸üĞÂ
+//ä¸è¾“å…¥æœ‰å…³çš„æ›´æ–°
 void UpdateWithInput(void)
 {
 	if (kbhit())
 	{
 		char input = getch();
-		//·É»úÒÆ¶¯
+		//é£æœºç§»åŠ¨
 		if ( (input == 'a' || input == 'A') && air.y > 1)
 		{
 			canvas[air.x][air.y] = Space;
@@ -208,24 +208,24 @@ void UpdateWithInput(void)
 			canvas[air.x][air.y] = AirPlane;
 		}
 
-		//·É»ú¹¥»÷¼°¼¼ÄÜÊÍ·Å
+		//é£æœºæ”»å‡»åŠæŠ€èƒ½é‡Šæ”¾
 		else if ( (input == 'j' || input == 'J') )
 		{
 			k0 = J;
 		}
-		// k¼¼ÄÜ É¨Éä
+		// kæŠ€èƒ½ æ‰«å°„
 		else if ( (input == 'k' || input == 'K') && sp >= EnengyConsumptionK && k1 == 0)
 		{
 			sp -= EnengyConsumptionK;
 			k1 = K;
 		}
-		// l¼¼ÄÜ ÉúÃü»Ö¸´
+		// læŠ€èƒ½ ç”Ÿå‘½æ¢å¤
 		else if ( (input == 'l' || input == 'L') && sp >= EnengyConsumptionL && hp < HpMax && hp > 0 && k2 == 0)
 		{
 			sp -= EnengyConsumptionL;
 			k2 = L;
 		}
-		//ÔİÍ£ÓÎÏ·
+		//æš‚åœæ¸¸æˆ
 		else if (input == 27)
 		{
 			GoToXY(High / 4, Width / 4);
@@ -235,29 +235,29 @@ void UpdateWithInput(void)
 	}
 }
 
-//ÓëÊäÈëÎŞ¹ØµÄ¸üĞÂ
+//ä¸è¾“å…¥æ— å…³çš„æ›´æ–°
 void UpdateWithoutInput(void)
 {
 
-	//Ñ°ÕÒ×Óµ¯  ×Óµ¯·ÉĞĞ  
+	//å¯»æ‰¾å­å¼¹  å­å¼¹é£è¡Œ  
 	int i, j;
 	for (i = 1; i < High - 2; i++)	
-	{//×Óµ¯²»¿ÉÄÜ³öÏÖÔÚ×îºóÒ»ĞĞ£¬ËùÒÔÖ»ĞèËÑË÷µ½ High - 2ĞĞ£¨High - 1ĞĞÎª±ß½ç£©
+	{//å­å¼¹ä¸å¯èƒ½å‡ºç°åœ¨æœ€åä¸€è¡Œï¼Œæ‰€ä»¥åªéœ€æœç´¢åˆ° High - 2è¡Œï¼ˆHigh - 1è¡Œä¸ºè¾¹ç•Œï¼‰
 		for (j = 1; j < Width - 1; j++)
 		{
 			if (canvas[i][j] == Bullet)
 			{
-				//×Óµ¯ÒÆ¶¯
+				//å­å¼¹ç§»åŠ¨
 				if (i > 1)
 				{
 					canvas[i - 1][j] = Bullet;
 				}
 				canvas[i][j] = Space;
-				//×Óµ¯»÷ÖĞ
+				//å­å¼¹å‡»ä¸­
 				if ((i - 1 == enemy.x || i == enemy.x || i + 1 == enemy.x) && j == enemy.y)
 				{
 					score++;
-					//ÅĞ¶ÏÄÜÁ¿»Ö¸´
+					//åˆ¤æ–­èƒ½é‡æ¢å¤
 					if (p == 0)
 					{
 						sp += SpRecover2;
@@ -272,12 +272,12 @@ void UpdateWithoutInput(void)
 		}
 	}
 
-	//j¼¼ÄÜk0 ÆÕ¹¥
+	//jæŠ€èƒ½k0 æ™®æ”»
 	if (k0 != 0)
 	{
 		if (k0 % 3 != 0)
 		{
-			//²úÉú×Óµ¯
+			//äº§ç”Ÿå­å¼¹
 			int d;
 			for (d = -1; d <= 1; d++)
 			{
@@ -290,12 +290,12 @@ void UpdateWithoutInput(void)
 		k0--;
 	}
 
-	//k¼¼ÄÜk1 É¨Éä
+	//kæŠ€èƒ½k1 æ‰«å°„
 	if (k1 != 0 )
 	{
 		if (k1 % 4 != 0)
 		{
-			//²úÉú×Óµ¯
+			//äº§ç”Ÿå­å¼¹
 			int d;
 			for (d = -3; d <= 3; d++)
 			{
@@ -308,7 +308,7 @@ void UpdateWithoutInput(void)
 		k1--;
 	}
 
-	//l¼¼ÄÜk2 ÉúÃü»Ö¸´£¨»ºÂı»Ö¸´10µã£© 
+	//læŠ€èƒ½k2 ç”Ÿå‘½æ¢å¤ï¼ˆç¼“æ…¢æ¢å¤10ç‚¹ï¼‰ 
 	if (k2 != 0)
 	{
 		if (k2 % 50 == 0)
@@ -318,7 +318,7 @@ void UpdateWithoutInput(void)
 		k2--;
 	}
 
-	//µĞ»úµ½´ïµ×²¿
+	//æ•Œæœºåˆ°è¾¾åº•éƒ¨
 	if (enemy.x >= High - 2) 
 	{
 		if (p == 0)
@@ -332,7 +332,7 @@ void UpdateWithoutInput(void)
 		NewEnemy();
 	}
 
-	//µĞ»úÔË¶¯¸üĞÂ
+	//æ•Œæœºè¿åŠ¨æ›´æ–°
 	static int speed = 0;
 	if (speed <= EnemyMoveSpeed)
 	{
@@ -346,7 +346,7 @@ void UpdateWithoutInput(void)
 		}
 	}
 	
-	//·É»úÓëµĞ»úÏà×²
+	//é£æœºä¸æ•Œæœºç›¸æ’
 	if ( (enemy.x == air.x && enemy.y == air.y))
 	{
 		if (p == 0)
@@ -370,7 +370,7 @@ void UpdateWithoutInput(void)
 		}
 	}
 
-	//±£Ö¤ÉúÃüºÍÄÜÁ¿²»Ô½½ç
+	//ä¿è¯ç”Ÿå‘½å’Œèƒ½é‡ä¸è¶Šç•Œ
 	if (sp < 0 || sp > SpMax || hp < 0 || hp > HpMax)
 	{
 		if (hp < 0)
@@ -393,7 +393,7 @@ void UpdateWithoutInput(void)
 
 }
 
-//»¶Ó­½çÃæ  
+//æ¬¢è¿ç•Œé¢  
 void Welcome(void)
 {
 	HideCur();
@@ -402,7 +402,7 @@ void Welcome(void)
 	{
 		printf("\n");
 	}
-	printf("			 ·É»ú´óÕ½");
+	printf("			 é£æœºå¤§æˆ˜");
 
 	for (i = 0; i < High / 3; i++)
 	{
@@ -414,7 +414,7 @@ void Welcome(void)
 	
 }
 
-//²úÉúĞÂµĞ»ú»òÄÜÁ¿Òò×Ó
+//äº§ç”Ÿæ–°æ•Œæœºæˆ–èƒ½é‡å› å­
 void NewEnemy(void)
 {
 	if (canvas[enemy.x][enemy.y] == EnemyJudge() )
@@ -425,11 +425,11 @@ void NewEnemy(void)
 	p = rand() % ProbabERF;
 
 	enemy.x = 1;
-	enemy.y = rand() % (Width - 16) + 8;	//ÎªÁËÓÎÏ·½µµÍÄÑ¶È£¬µĞ»ú²»»á³öÏÖÔÚ¿¿½ü±ß½çµÄÎ»ÖÃ
+	enemy.y = rand() % (Width - 16) + 8;	//ä¸ºäº†æ¸¸æˆé™ä½éš¾åº¦ï¼Œæ•Œæœºä¸ä¼šå‡ºç°åœ¨é è¿‘è¾¹ç•Œçš„ä½ç½®
 	canvas[enemy.x][enemy.y] = EnemyJudge();
 }
 
-//ÅĞ¶ÏµĞ»úÀàĞÍ£¨µĞ»ú/ÄÜÁ¿Òò×Ó£©
+//åˆ¤æ–­æ•Œæœºç±»å‹ï¼ˆæ•Œæœº/èƒ½é‡å› å­ï¼‰
 int EnemyJudge(void)
 {
 	if (p == 0)
@@ -442,14 +442,14 @@ int EnemyJudge(void)
 	}
 }
 
-//Òş²Ø¹â±ê 
+//éšè—å…‰æ ‡ 
 void HideCur(void)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO cursor_info = {1, 0};
-	SetConsoleCursorInfo(handle, &cursor_info);
+	CONSOLE_CURSOR_INFO info = {1, 0};
+	SetConsoleCursorInfo(handle, &info);
 }
-//¹â±êÒÆ¶¯ 
+//å…‰æ ‡ç§»åŠ¨ 
 void GoToXY(int x, int y)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
