@@ -101,7 +101,7 @@ void Print(void)
 	{
 		if (i <= hp / 10)
 		{
-			printf("\3 ");
+			printf("▅");
 		}
 		else
 		{
@@ -126,7 +126,7 @@ void Print(void)
 	{
 		if (i <= sp / 10)
 		{
-			printf("\4 ");
+			printf("▅");
 		}
 		else
 		{
