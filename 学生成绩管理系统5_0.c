@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define   MAX_LEN  10                	   /* ×Ö·û´®×î´ó³¤¶È */
-#define   STU_NUM 30                       /* ×î¶àµÄÑ§ÉúÈËÊı */
-#define   COURSE_NUM 6                     /* ×î¶àµÄ¿¼ÊÔ¿ÆÄ¿Êı */
+#define   MAX_LEN  10                	   /* å­—ç¬¦ä¸²æœ€å¤§é•¿åº¦ */
+#define   STU_NUM 30                       /* æœ€å¤šçš„å­¦ç”Ÿäººæ•° */
+#define   COURSE_NUM 6                     /* æœ€å¤šçš„è€ƒè¯•ç§‘ç›®æ•° */
 typedef struct student
 {
-	long num;	/* Ã¿¸öÑ§ÉúµÄÑ§ºÅ */
-	char name[MAX_LEN];            	/* Ã¿¸öÑ§ÉúµÄĞÕÃû */
-	float score[COURSE_NUM];	/* Ã¿¸öÑ§ÉúCOURSE_NUMÃÅ¹¦¿ÎµÄ³É¼¨ */
-	float sum;                       /* Ã¿¸öÑ§ÉúµÄ×Ü³É¼¨ */
-	float aver;                   /* Ã¿¸öÑ§ÉúµÄÆ½¾ù³É¼¨ */
+	long num;	/* æ¯ä¸ªå­¦ç”Ÿçš„å­¦å· */
+	char name[MAX_LEN];            	/* æ¯ä¸ªå­¦ç”Ÿçš„å§“å */
+	float score[COURSE_NUM];	/* æ¯ä¸ªå­¦ç”ŸCOURSE_NUMé—¨åŠŸè¯¾çš„æˆç»© */
+	float sum;                       /* æ¯ä¸ªå­¦ç”Ÿçš„æ€»æˆç»© */
+	float aver;                   /* æ¯ä¸ªå­¦ç”Ÿçš„å¹³å‡æˆç»© */
 }STU;
 int   Menu(void);
 void  ReadScore(STU stu[], int n, int m);
