@@ -1,3 +1,14 @@
+/*
+	Name: AirBattleGame_2.0
+	Author: Caprice
+	School: CQUPT
+	Completed_Date: 02/25/2020 17:49
+	Published_Date: 03/03/2020 18:04
+	Description:
+		仅用于交流学习，未经允许禁止用作其他商业行为
+		如果想引用部分代码进行创作并上传网络, 请注明原作者
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -7,7 +18,7 @@
 //游戏常数参数
 enum constant
 {
-	Edge = -1, AirPlane = 1, Space = 0, Bullet = 2, Enemy = 3, EnergyRecoveryFactor = 4,	//输出元素
+	Edge = -1, AirPlane = 1, Space = 0, Bullet = 2, Enemy = 3, EnergyRecoveryFactor = 4,	//对应元素
 	SpMax = 100, HpMax = 100,	//最大值
 	J = 3, K = 100, L = 500,	//技能
 	SpRecover1 = 2, SpRecover2 = 20,	//能量回复
@@ -25,9 +36,9 @@ typedef struct
 
 //初值
 POS air, enemy;
-int canvas[High][Width] = { 0 };	//画布
+int canvas[High][Width] = { 0 };		//画布
 int score = 0, hp = HpMax, sp = SpMax, p = 1;	//得分，生命，能量，概率
-int k0 = 0, k1 = 0, k2 = 0;		//技能
+int k0 = 0, k1 = 0, k2 = 0;			//技能
 
 void Welcome(void);
 void Start(void);
