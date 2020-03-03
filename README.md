@@ -1,4 +1,4 @@
-# WangGH  AirBattleGame
+# WangGH_AirBattleGame
 
 **项目名称：           游戏——飞机大战v2.0**
 
