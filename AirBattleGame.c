@@ -1,6 +1,6 @@
 /*
 	Name: AirBattleGame_2.0
-	Author: Caprice
+	Author: WangGH577
 	School: CQUPT
 	Completed_Date: 02/25/2020 17:49
 	Published_Date: 03/03/2020 18:04
